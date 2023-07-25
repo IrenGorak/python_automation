@@ -1,5 +1,6 @@
+import time
 
-from pages.elemets_page import TextBoxPage
+from pages.elemets_page import TextBoxPage, CheckBoxPage
 
 
 class TestElement:
@@ -21,4 +22,16 @@ class TestElement:
             output_data = text_box_page.check_filled_form()
             assert input_data == output_data
             """
+    class TestCheckbox:
+        def test_check_checkbox(self, driver):
+            check_box_page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
+            check_box_page.open()
+            check_box_page.open_full_checkbox_list()
+            check_box_page.click_random_checkbox()
+            input_checkbox = check_box_page.get_checked_checkboxes()
+            output_result = check_box_page.get_output_result()
+            print(input_checkbox)
+            print(output_result)
+            assert input_checkbox == output_result, "Checkboxes have not been selected"
+            time.sleep(3)
 
