@@ -69,3 +69,29 @@ class TestElement:
             print(table_result)
             assert key_word in table_result, "the resul is not finded in the table"
 
+        def test_web_table_update_person_info(self, driver):
+            web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
+            web_table_page.open()
+            last_name = web_table_page.add_new_person()[1]
+            web_table_page.search_person_in_table(last_name)
+            age = web_table_page.update_person_info()
+            row = web_table_page.check_the_search_result()
+            assert age in row, "the age is not changed"
+
+        def test_web_table_delete_person(self, driver):
+            web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
+            web_table_page.open()
+            email = web_table_page.add_new_person()[3]
+            web_table_page.search_person_in_table(email)
+            web_table_page.delete_person()
+            text = web_table_page.check_deleted_person()
+            assert text == "No rows found"
+
+        # the bug was found in the page, so the test is failed.
+        # When nwe change the rows in page we doesn't see dropdown for selected view
+        def test_web_table_change_count_row(self, driver):
+            web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
+            web_table_page.open()
+            count = web_table_page.change_rows_count()
+            assert count == [5, 10], "The number of rows in the table has not been change"
+
