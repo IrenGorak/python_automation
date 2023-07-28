@@ -118,3 +118,30 @@ class WebTablePage(BasePage):
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
         row = delete_button.find_element(By.XPATH, "//*[@id='app']/div/div/div[2]/div[2]/div[2]/div[3]/div[1]/div[2]")
         return row.text.splitlines()
+
+    def update_person_info(self):
+        person_info = next(generated_person())
+        age = person_info.age
+        self.element_is_visible(self.locators.UPDATE_BUTTON).click()
+        self.element_is_visible(self.locators.USER_AGE).send_keys(age)
+        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        return str(age)
+
+    def delete_person(self):
+        self.element_is_visible(self.locators.DELETE_BUTTON).click()
+
+    def check_deleted_person(self):
+        return self.element_is_present(self.locators.NO_ROWS_DATA).text
+
+    def change_rows_count(self):
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for x in count:
+            count_row_button = self.element_is_visible(self.locators.SELECT_ROWS)
+            self.go_to_element(count_row_button).click()
+            self.element_is_visible((By.CSS_SELECTOR, f"option[value='{x}']")).click()
+            data.append(self.change_rows_count())
+
+    def check_count_rows(self):
+        list_rows = self.elements_are_present(self.locators.PERSON_LIST)
+        return len(list_rows)

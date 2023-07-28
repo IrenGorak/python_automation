@@ -41,3 +41,7 @@ class WebTablePageLocators:
     PERSON_LIST = (By.CSS_SELECTOR, "div[class='rt-tr-group']")
     SEARCH_FIELD = (By.ID, "searchBox")
     DELETE_BUTTON = (By.CSS_SELECTOR, "span[title='Delete']")
+
+    UPDATE_BUTTON = (By.CSS_SELECTOR, "span[title='Edit']")
+    NO_ROWS_DATA = (By.CLASS_NAME, "rt-noData")
+    SELECT_ROWS = (By.CLASS_NAME, "select-wrap")
