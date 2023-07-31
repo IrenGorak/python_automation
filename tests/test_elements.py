@@ -1,7 +1,8 @@
 import random
 import time
 
-from pages.elemets_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
+from pages.elemets_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinkPage, \
+    UploadDownloadPage, DynamicPropertiesPage
 
 
 class TestElement:
@@ -105,3 +106,50 @@ class TestElement:
             assert double == 'You have done a double click', "The double button is not pressed"
             assert right == 'You have done a right click', "The right button is not pressed"
             assert click == 'You have done a dynamic click', "The dynamic button is not pressed"
+
+    class TestLinkPage:
+        def test_the_correct_link(self, driver):
+            link_page = LinkPage(driver, "https://demoqa.com/links")
+            link_page.open()
+            href_link, current_url = link_page.check_new_tab_simple_link()
+            print(href_link, current_url)
+            assert href_link == current_url
+
+        def test_broken_link(self, driver):
+            link_page = LinkPage(driver, "https://demoqa.com/links")
+            link_page.open()
+            response_code = link_page.check_broken_link("https://demoqa.com/bad-request")
+            assert response_code == 400
+
+    class TestUploadDownload:
+        def test_upload_file(self, driver):
+            upload_file = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            upload_file.open()
+            upload_file.upload_file()
+
+        def test_download_file(self, driver):
+            download_file = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            download_file.open()
+            check = download_file.download_file()
+            assert check is True, "The file has not been downloaded"
+
+    class TestDynamicProperties:
+        def test_change_color_button(self, driver):
+            dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties.open()
+            color_before, color_after = dynamic_properties.check_change_color()
+            assert color_before != color_after, "The color is not changed"
+
+        def test_visible_after_button(self, driver):
+            dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties.open()
+            appear = dynamic_properties.check_appear_button()
+            assert appear is True, "The buuton is not visible after 5 second"
+
+        def test_check_enable_button(self, driver):
+            dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            dynamic_properties.open()
+            enable = dynamic_properties.check_enable_button()
+            assert enable is True, "The button is not clickable after 5 second"
+
+

@@ -55,3 +55,20 @@ class ButtonsPageLocators:
     DOUBLE_CLICK_MESSAGE = (By.ID, "doubleClickMessage")
     RIGHT_CLICK_MESSAGE = (By.ID, "rightClickMessage")
     CLICK_BUTTON_MESSAGE = (By.ID, "dynamicClickMessage")
+
+
+class LinkPageLocators:
+    SIMPLE_LINK = (By.CSS_SELECTOR, "a[id='simpleLink']")
+    BAD_REQUEST = (By.CSS_SELECTOR, "a[id='bad-request']")
+
+
+class UploadDownloadPageLocators:
+    DOWNLOAD_BUTTON = (By.CSS_SELECTOR, 'a[id="downloadButton"]')
+    UPLOAD_BUTTON = (By.ID, "uploadFile")
+    UPLOADED_FILE = (By.ID, "uploadedFilePath")
+
+
+class DynamicPropertiesLocators:
+    COLOR_CHANGE = (By.CSS_SELECTOR, "button[id='colorChange']")
+    VISIBLE_AFTER = (By.CSS_SELECTOR, "button[id='visibleAfter']")
+    ENABLE_AFTER = (By.CSS_SELECTOR, " button[id='enableAfter']")

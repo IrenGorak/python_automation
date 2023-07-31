@@ -20,3 +20,10 @@ def generated_person():
         permanent_address=faker_eng.street_name(),
     )
 
+
+def generated_file():
+    path = f'/Users/ira/python_automation/filetest{random.randint(0, 99)}.txt'
+    file = open(path, 'w+')
+    file.write(f"Hello {random.randint(0, 100)}")
+    file.close()
+    return file.name, path
