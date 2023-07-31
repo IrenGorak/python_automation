@@ -1,10 +1,15 @@
+import base64
+import os
 import random
+import time
 
+import requests
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
-from generator.generator import generated_person
+from generator.generator import generated_person, generated_file
 from locators.elements_page_locator import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonLocators, \
-    WebTablePageLocators, ButtonsPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinkPageLocators, UploadDownloadPageLocators, DynamicPropertiesLocators
 from pages.base_page import BasePage
 
 
@@ -165,4 +170,79 @@ class ButtonsPage(BasePage):
 
     def checked_clicked_button(self, element):
         return self.element_is_present(element).text
+
+
+class LinkPage(BasePage):
+    locators = LinkPageLocators()
+
+    def check_new_tab_simple_link(self):
+        simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
+        link_href = simple_link.get_attribute("href")
+        request = requests.get(link_href)
+        if request.status_code == 200:
+            simple_link.click()
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            url = self.driver.current_url
+            return link_href, url
+        else:
+            return request.status_code
+
+    def check_broken_link(self, url):
+        request = requests.get(url)
+        if request.status_code == 200:
+            self.element_is_present(self.locators.BAD_REQUEST).click()
+        else:
+
+            return request.status_code
+
+
+class UploadDownloadPage(BasePage):
+    locators = UploadDownloadPageLocators()
+
+    def upload_file(self):
+        file_name, path = generated_file()
+        self.element_is_present(self.locators.UPLOAD_BUTTON).send_keys(path)
+        time.sleep(5)
+        os.remove(path)
+        text = self.element_is_present(self.locators.UPLOADED_FILE).text
+        print(file_name)
+        print(path)
+
+    def download_file(self):
+        link = self.element_is_present(self.locators.DOWNLOAD_BUTTON).get_attribute('href')
+        link_b = base64.b64decode(link)
+        path_name_file = rf'/Users/ira/python_automation/filetest{random.randint(0, 99)}.jpg'
+        with open(path_name_file, 'wb+') as f:
+            offset = link_b.find(b'\xff\xd8')
+            f.write(link_b[offset::])
+            check_file = os.path.exists(path_name_file)
+            f.close()
+            os.remove(path_name_file)
+        return check_file
+
+
+class DynamicPropertiesPage(BasePage):
+    locators = DynamicPropertiesLocators()
+
+    def check_change_color(self):
+        color = self.element_is_present(self.locators.COLOR_CHANGE)
+        color_button_before = color.value_of_css_property('color')
+        time.sleep(5)
+        color_button_after = color.value_of_css_property('color')
+        return color_button_before, color_button_after
+
+    def check_appear_button(self):
+        try:
+            self.element_is_visible(self.locators.VISIBLE_AFTER)
+        except TimeoutException:
+            return False
+        return True
+
+    def check_enable_button(self):
+        try:
+            self.element_is_clickable(self.locators.ENABLE_AFTER)
+        except TimeoutException:
+            return False
+        return True
+
 
