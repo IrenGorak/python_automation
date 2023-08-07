@@ -1,0 +1,70 @@
+import random
+import time
+
+from locators.alerts_windows_locators import WindowsPageLocators, AlertsLocators
+from pages.base_page import BasePage
+
+
+class WindowsPage(BasePage):
+    locators = WindowsPageLocators()
+
+    def check_open_new_tab(self):
+        self.element_is_visible(self.locators.NEW_WINDOW).click()
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        text_title = self.element_is_present(self.locators.NEW_TAB_TEXT).text
+        return text_title
+
+    def check_open_new_window(self):
+        self.element_is_visible(self.locators.NEW_WINDOW).lick()
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        text_title = self.element_is_present(self.locators.NEW_TAB_TEXT).text
+        return text_title
+
+
+class AlertsPage(BasePage):
+    locators = AlertsLocators()
+
+    def check_see_alert(self):
+        self.element_is_visible(self.locators.SIMPLE_ALERT_BUTTON).click()
+        try:
+            alert_window = self.driver.switch_to.alert
+            return alert_window.text
+        finally:
+            alert_window = self.driver.switch_to.alert
+            alert_window.accept()
+
+    def check_alert_5_seconds(self):
+        self.element_is_visible(self.locators.ALERT_BUTTON_5_SECONDS).click()
+        time.sleep(6)
+        try:
+            alert_window = self.driver.switch_to.alert
+            return alert_window.text
+        finally:
+            alert_window = self.driver.switch_to.alert
+            alert_window.accept()
+
+    def check_confirm_alert(self):
+        self.element_is_visible(self.locators.CONFIRM_BUTTON).click()
+        try:
+            alert_window = self.driver.switch_to.alert
+            choice = random.choice([0, 1])
+            if choice == 0:
+                alert_window.dismiss()
+            else:
+                alert_window.accept()
+        finally:
+            text_result = self.element_is_present(self.locators.TEXT_SUCCESS).text
+            print(text_result)
+        return text_result
+
+    def check_promt_alert(self):
+        text = f"autotest{random.randint(1, 32)}"
+        self.element_is_visible(self.locators.PROMT_BUTTON).click()
+        try:
+            alert_window = self.driver.switch_to.alert
+            alert_window.send_keys(text)
+            alert_window.accept()
+        finally:
+            text_result = self.element_is_present(self.locators.PROMT_RESULT).text
+            print(text_result)
+        return text, text_result
