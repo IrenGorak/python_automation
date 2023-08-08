@@ -1,4 +1,4 @@
-from pages.alerts_windows_page import WindowsPage, AlertsPage
+from pages.alerts_windows_page import WindowsPage, AlertsPage, FramePage, NestedFramePage
 
 
 class TestAlertsWindows:
@@ -39,3 +39,20 @@ class TestAlertsWindows:
             alerts_page.open()
             text, alert_text = alerts_page.check_promt_alert()
             assert alert_text == f"You entered {text}", "The text is not in alert form"
+
+    class TestFramePage:
+        def test_frame_page(self, driver):
+            frame_page = FramePage(driver, "https://demoqa.com/frames")
+            frame_page.open()
+            result_1 = frame_page.check_frames('frame1')
+            result_2 = frame_page.check_frames('frame2')
+            assert result_1 == ['This is a sample page', '500px', '350px'], 'The frame does not exist'
+            assert result_2 == ['This is a sample page', '100px', '100px'], 'The frame does not exist'
+
+    class TestNestedFrames:
+        def test_nested_frames(self, driver):
+            nested_frame = NestedFramePage(driver, "https://demoqa.com/nestedframes")
+            nested_frame.open()
+            parent_text, child_text = nested_frame.check_nested_frames()
+            assert parent_text == "Parent frame", "The frame does not exist or the text is changed"
+            assert child_text == "Child Iframe", 'The frame does not exist or the thext is changed'
