@@ -1,7 +1,7 @@
 import random
 import time
 
-from locators.alerts_windows_locators import WindowsPageLocators, AlertsLocators
+from locators.alerts_windows_locators import WindowsPageLocators, AlertsLocators, FrameLocators, NestePageLocators
 from pages.base_page import BasePage
 
 
@@ -68,3 +68,37 @@ class AlertsPage(BasePage):
             text_result = self.element_is_present(self.locators.PROMT_RESULT).text
             print(text_result)
         return text, text_result
+
+
+class FramePage(BasePage):
+    locators = FrameLocators()
+
+    def check_frames(self, frame_num):
+        if frame_num == "frame1":
+            frame = self.element_is_present(self.locators.FRAME_1)
+            width = frame.get_attribute("width")
+            height = frame.get_attribute("height")
+            self.driver.switch_to.frame(frame)
+            text = self.element_is_present(self.locators.TITLE_FRAME).text
+            self.driver.switch_to.default_content()
+            return [text, width, height]
+        if frame_num == "frame2":
+            frame = self.element_is_present(self.locators.FRAME_2)
+            width = frame.get_attribute("width")
+            height = frame.get_attribute("height")
+            self.driver.switch_to.frame(frame)
+            text = self.element_is_present(self.locators.TITLE_FRAME).text
+            return [text, width, height]
+
+
+class NestedFramePage(BasePage):
+    locators = NestePageLocators()
+
+    def check_nested_frames(self):
+        parent_frame = self.element_is_present(self.locators.MAIN_FRAME)
+        self.driver.switch_to.frame(parent_frame)
+        parent_text = self.element_is_present(self.locators.MAIN_TEXT).text
+        child_frame = self.element_is_present(self.locators.CHILD_FRAME)
+        self.driver.switch_to.frame(child_frame)
+        child_text = self.element_is_present(self.locators.CHILD_TEXT).text
+        return parent_text, child_text
