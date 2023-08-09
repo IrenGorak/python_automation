@@ -1,7 +1,8 @@
 import random
 import time
 
-from locators.alerts_windows_locators import WindowsPageLocators, AlertsLocators, FrameLocators, NestePageLocators
+from locators.alerts_windows_locators import WindowsPageLocators, AlertsLocators, FrameLocators, NestePageLocators, \
+    ModalWindowPageLocators
 from pages.base_page import BasePage
 
 
@@ -102,3 +103,20 @@ class NestedFramePage(BasePage):
         self.driver.switch_to.frame(child_frame)
         child_text = self.element_is_present(self.locators.CHILD_TEXT).text
         return parent_text, child_text
+
+
+class ModalWindowPage(BasePage):
+    locators = ModalWindowPageLocators()
+
+    def check_small_modaL_window(self):
+        self.element_is_visible(self.locators.SMALL_MODAL_WINDOW).click()
+        title__small_window = self.element_is_visible(self.locators.SMALL_TITLE).text
+        body_small_window = self.element_is_visible(self.locators.SMALL_BODY).text
+        self.driver.switch_to.default_content()
+        return title__small_window, len(body_small_window)
+
+    def check_large_modaL_window(self):
+        self.element_is_visible(self.locators.LARGE_MODAL_WINDOW).click()
+        title_large_window = self.element_is_visible(self.locators.LARGE_TITLE).text
+        body_large_window = self.element_is_visible(self.locators.LARGE_BODY).text
+        return title_large_window, len(body_large_window)
