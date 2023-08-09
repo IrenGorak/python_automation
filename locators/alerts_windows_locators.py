@@ -27,3 +27,15 @@ class NestePageLocators:
     MAIN_TEXT = (By.CSS_SELECTOR, 'body')
     CHILD_FRAME = (By.CSS_SELECTOR, "iframe[srcdoc='<p>Child Iframe</p>']")
     CHILD_TEXT = (By.CSS_SELECTOR, 'p')
+
+
+class ModalWindowPageLocators:
+    SMALL_MODAL_WINDOW = (By.ID, "showSmallModal")
+    SMALL_CLOSED_BUTTON = (By.ID, "closeSmallModal")
+    SMALL_TITLE = (By.ID, "example-modal-sizes-title-sm")
+    SMALL_BODY = (By.CSS_SELECTOR, "div[class='modal-body']")
+
+    LARGE_MODAL_WINDOW = (By.ID, "showLargeModal")
+    LARGE_CLOSE_BUTTON = (By.ID, "closeLargeModal")
+    LARGE_TITLE = (By.ID, "example-modal-sizes-title-lg")
+    LARGE_BODY = (By.CSS_SELECTOR, "div[class='modal-body']")
