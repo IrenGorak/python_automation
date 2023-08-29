@@ -1,4 +1,5 @@
-from pages.widgets_page import AccordianPage, AutoCompletePage, DataPickerPage, SliderPage, ProgresBarPage
+from pages.widgets_page import AccordianPage, AutoCompletePage, DataPickerPage, SliderPage, ProgresBarPage, TabPage, \
+    ToopTipPage, MenuPage, SelectMenuPage
 
 
 class TestWidgetsPage:
@@ -62,3 +63,40 @@ class TestWidgetsPage:
             progress_bar.open()
             before, after = progress_bar.check_progress_bar()
             assert before != after, "The progress bar is not change"
+
+    class TestTabs:
+        def test_open_tabs(self, driver):
+            tab_page = TabPage(driver, "https://demoqa.com/tabs")
+            tab_page.open()
+            what_button, what_content = tab_page.check_open_tab('what')
+            origin_button, origin_content = tab_page.check_open_tab('origin')
+            use_button, use_content = tab_page.check_open_tab('use')
+            assert what_button == 'What' and what_content != 0, "The tab 'what' was not present or the the is missing"
+            assert origin_button == 'Origin' and origin_content != 0, "The tab 'origin' was not present or the the is missing"
+            assert use_button == 'Use' and use_content != 0, "The tab 'use' was not present or the the is missing"
+
+    class TestToolTips:
+        def test_tool_tips(self, driver):
+            tool_tips_page = ToopTipPage(driver, "https://demoqa.com/tool-tips")
+            tool_tips_page.open()
+            button_text, field_text, link_text, number_text = tool_tips_page.check_tool_tips()
+            assert button_text == "You hovered over the Button", "Hover missing or incorrect text"
+            assert field_text == "You hovered over the text field", "Hover missing or incorrect text"
+            assert link_text == "You hovered over the Contrary", "Hover missing or incorrect text"
+            assert number_text == "You hovered over the 1.10.32", "Hover missing or incorrect text"
+
+    class TestMenu:
+        def test_open_menu(self, driver):
+            menu_page = MenuPage(driver, "https://demoqa.com/menu")
+            menu_page.open()
+            data = menu_page.check_menu()
+            result = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »', 'Sub Sub Item 1', 'Sub Sub Item 2', 'Main Item 3']
+            assert data == result, "Some tabs is not open or click"
+
+    class TestSelectMenu:
+        def test_check_select_menu(self, driver):
+            select_menu = SelectMenuPage(driver, "https://demoqa.com/select-menu")
+            select_menu.open()
+            select_menu.check_select_menu()
+
+

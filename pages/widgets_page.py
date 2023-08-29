@@ -7,7 +7,8 @@ from selenium.webdriver.support.select import Select
 
 from generator.generator import generator_color, generated_date
 from locators.widgets_locators import AccordianPageLocators, AutoCompletePageLocators, DataPickerPageLocators, \
-    SliderPageLocators, ProgresBarPageLocators
+    SliderPageLocators, ProgresBarPageLocators, TabPageLocators, ToopTipPageLocators, MenuPageLocators, \
+    SelectMenuPageLocators
 from pages.base_page import BasePage
 
 
@@ -134,3 +135,82 @@ class ProgresBarPage(BasePage):
         progress_bar.click()
         value_after = self.element_is_present(self.locators.PROGRESS_BAR_VALUE).text
         return value_before, value_after
+
+
+class TabPage(BasePage):
+    locators = TabPageLocators()
+
+    def check_open_tab(self, name_tab):
+        tabs = {
+                "what":
+                    {'title': self.locators.WHAT_TAB,
+                     'content': self.locators.WHAT_CONTENT},
+                "origin":
+                    {'title': self.locators.ORIGIN_TAB,
+                     'content': self.locators.ORIGIN_CONTENT},
+                "use":
+                    {'title': self.locators.USE_TAB,
+                     'content': self.locators.USE_CONTENT},
+             }
+
+        button = self.element_is_visible(tabs[name_tab]['title'])
+        button.click()
+        content = self.element_is_visible(tabs[name_tab]['content']).text
+        return button.text, len(content)
+
+
+class ToopTipPage(BasePage):
+    locators = ToopTipPageLocators()
+
+    def get_the_text_from_tool_tips(self, hover_element, wait_element):
+        element = self.element_is_present(hover_element)
+        self.action_move_to_element(element)
+        time.sleep(0.5)
+        self.element_is_visible(wait_element)
+        tool_tip_text = self.element_is_visible(self.locators.TOOP_TIPS_TEXT)
+        text = tool_tip_text.text
+        return text
+
+    def check_tool_tips(self):
+        tool_tip_text_button = self.get_the_text_from_tool_tips(self.locators.TOOL_TIP_BUTTON,
+                                                                self.locators.HOVER_TEXT_BUTTON)
+        tool_tip_text_field = self.get_the_text_from_tool_tips(self.locators.TOOL_TIP_FIELD,
+                                                               self.locators.HOVER_FIELD_TEXT)
+        tool_tip_text_link = self.get_the_text_from_tool_tips(self.locators.TOOL_TIP_TEXT_LINK,
+                                                              self.locators.HOVER_TEXT_LINK)
+        tool_tip_text_number = self.get_the_text_from_tool_tips(self.locators.TOOL_TIP_NUMBER_LINK,
+                                                                self.locators.HOVER_NUMBER_TEXT)
+        return tool_tip_text_button, tool_tip_text_field, tool_tip_text_link, tool_tip_text_number
+
+
+class MenuPage(BasePage):
+    locators = MenuPageLocators()
+
+    def check_menu(self):
+        menu_item_list = self.elements_are_present(self.locators.MENU_ITEM_LIST)
+        data = []
+        for item in menu_item_list:
+            self.action_move_to_element(item)
+            data.append(item.text)
+        return data
+
+
+class SelectMenuPage(BasePage):
+    locators = SelectMenuPageLocators()
+
+    def check_select_menu(self):
+        self.element_is_visible(self.locators.SELECT_VALUE).click()
+        self.element_is_present(self.locators.SELECT_MENU).click()
+        output_select_value = self.element_is_visible(self.locators.SELECT_MENU_OUTPUT).text
+
+        self.element_is_visible(self.locators.SELECT_ONE).click()
+        self.element_is_present(self.locators.SELECT_MENU).click()
+        output_select_one = self.element_is_visible(self.locators.SELECT_MENU_OUTPUT).text
+
+        color = random.sample(next(generator_color()).color_name, k=1)
+        output_old_style = self.element_is_visible(self.locators.OLD_STYLE_MENU)
+        output_old_style.send_keys(color)
+        output_old_style.send_keys(Keys.ENTER)
+        self.driver.back()
+        return output_select_value, output_select_one, output_old_style
+
