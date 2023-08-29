@@ -1,3 +1,5 @@
+import random
+
 from selenium.webdriver.common.by import By
 
 
@@ -40,3 +42,42 @@ class SliderPageLocators:
 class ProgresBarPageLocators:
     PROGRESS_BAR__START_BUTTON = (By.CSS_SELECTOR, "button[id='startStopButton']")
     PROGRESS_BAR_VALUE = (By.CSS_SELECTOR, "div[class='progress-bar bg-info']")
+
+
+class TabPageLocators:
+    WHAT_TAB = (By.CSS_SELECTOR, "a[id='demo-tab-what']")
+    WHAT_CONTENT = (By.CSS_SELECTOR, "div[id='demo-tabpane-what']")
+    ORIGIN_TAB = (By.CSS_SELECTOR, "a[id='demo-tab-origin']")
+    ORIGIN_CONTENT = (By.CSS_SELECTOR, "div[id='demo-tabpane-origin']")
+    USE_TAB = (By.ID, 'demo-tab-use')
+    USE_CONTENT = (By.ID, "demo-tab-use")
+    MORE_TABS = (By.CSS_SELECTOR, "a[id='demo-tab-more']")
+    MORE_CONTENT = (By.CSS_SELECTOR, "div[id='demo-tabpane-more']")
+
+
+class ToopTipPageLocators:
+    TOOL_TIP_BUTTON = (By.CSS_SELECTOR, "button[id='toolTipButton']")
+    HOVER_TEXT_BUTTON = (By.CSS_SELECTOR, "button[aria-describedby='buttonToolTip']")
+
+    TOOL_TIP_FIELD = (By.CSS_SELECTOR, "input[id='toolTipTextField']")
+    HOVER_FIELD_TEXT = (By.CSS_SELECTOR, "input[aria-describedby='textFieldToolTip']")
+
+    TOOL_TIP_TEXT_LINK = (By.XPATH, "//*[.='Contrary']")
+    HOVER_TEXT_LINK = (By.CSS_SELECTOR, "a[aria-describedby='contraryTexToolTip']")
+
+    TOOL_TIP_NUMBER_LINK = (By.XPATH, "//*[.='1.10.32']")
+    HOVER_NUMBER_TEXT = (By.CSS_SELECTOR, "a[aria-describedby='sectionToolTip']")
+
+    TOOP_TIPS_TEXT = (By.CSS_SELECTOR, "div[class='tooltip-inner']")
+
+
+class MenuPageLocators:
+    MENU_ITEM_LIST = (By.CSS_SELECTOR, "ul[id='nav'] li a")
+
+
+class SelectMenuPageLocators:
+    SELECT_VALUE = (By.CSS_SELECTOR, "div[id='withOptGroup']")
+    SELECT_MENU = (By.CSS_SELECTOR, f"div[class=' css-26l3qy-menu']")
+    SELECT_MENU_OUTPUT = (By.CSS_SELECTOR, "div[class=' css-1uccc91-singleValue']")
+    SELECT_ONE = (By.CSS_SELECTOR, "div[id='selectOne']")
+    OLD_STYLE_MENU = (By.CSS_SELECTOR, "select[id='oldSelectMenu']")
