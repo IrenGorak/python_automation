@@ -25,4 +25,5 @@ def driver(request):
     else:
         raise pytest.UsageError("--browser should be chrome or firefox")
     yield browser
+    time.sleep(5)
     browser.quit()
