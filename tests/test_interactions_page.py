@@ -1,4 +1,4 @@
-from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DragabblePage
 
 
 class TestInteractions:
@@ -60,3 +60,23 @@ class TestInteractions:
             not_will_after_move, not_will_after_revert = droppable_page.not_will_revert_drag('not_will')
             assert will_move_after != will_after_revert, "the element has not reverted"
             assert not_will_after_move == not_will_after_revert, "the element has reverted"
+
+    class TestDragabblePage:
+        def test_simple_dragabble(self, driver):
+            dragabble_page = DragabblePage(driver, "https://demoqa.com/dragabble")
+            dragabble_page.open()
+            before, after = dragabble_page.simple_drag()
+            assert before != after, "the position of the box has not been change"
+
+        def test_axis_dragabble(self, driver):
+            dragabble_page = DragabblePage(driver, "https://demoqa.com/dragabble")
+            dragabble_page.open()
+            top_x, left_x = dragabble_page.axis_drag_x()
+            top_y, left_y = dragabble_page.axis_drag_y()
+            assert top_x[0][0] == top_x[1][0] and int(top_x[1][0]) == 0, "box position has not been change or there a shifr in position"
+            assert left_x[0][0] != left_x[1][0] and int(left_x[1][0]) != 0, "box position has not been change or there a shifr in position"
+            assert top_y[0][0] != top_y[1][0] and int(top_y[1][0]) != 0, "box position has not been change or there a shifr in position"
+            assert left_y[0][0] == left_y[1][0] and int(left_y[1][0]) == 0, "box position has not been change or there a shifr in position"
+
+
+
