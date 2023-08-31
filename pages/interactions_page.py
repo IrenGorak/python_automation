@@ -121,7 +121,7 @@ class DroppablePage(BasePage):
         self.action_drag_and_drop_to_element(drag_div, greedy_inner_box)
         text_greedy_big = self.element_is_visible(self.locators.SECOND_BOX_TEXT).text
         text_greedy_small = greedy_inner_box.text
-        return text_not_greedy_big,text_not_greedy_small, text_greedy_big, text_greedy_small
+        return text_not_greedy_big, text_not_greedy_small, text_greedy_big, text_greedy_small
 
     def not_will_revert_drag(self, type_drag):
 

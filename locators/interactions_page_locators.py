@@ -57,5 +57,3 @@ class DragabblePageLocators:
     AXIS_X = (By.CSS_SELECTOR, "div[id='restrictedX']")
     AXIS_Y = (By.CSS_SELECTOR, "div[id='restrictedY']")
 
-    CONTAINER_TAB = (By.CSS_SELECTOR, "a[id='draggableExample-tab-containerRestriction']")
-
