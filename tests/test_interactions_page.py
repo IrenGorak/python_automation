@@ -73,10 +73,14 @@ class TestInteractions:
             dragabble_page.open()
             top_x, left_x = dragabble_page.axis_drag_x()
             top_y, left_y = dragabble_page.axis_drag_y()
-            assert top_x[0][0] == top_x[1][0] and int(top_x[1][0]) == 0, "box position has not been change or there a shifr in position"
-            assert left_x[0][0] != left_x[1][0] and int(left_x[1][0]) != 0, "box position has not been change or there a shifr in position"
-            assert top_y[0][0] != top_y[1][0] and int(top_y[1][0]) != 0, "box position has not been change or there a shifr in position"
-            assert left_y[0][0] == left_y[1][0] and int(left_y[1][0]) == 0, "box position has not been change or there a shifr in position"
+            assert top_x[0][0] == top_x[1][0] and int(top_x[1][0]) == 0, \
+                "box position has not been change or there a shift in position"
+            assert left_x[0][0] != left_x[1][0] and int(left_x[1][0]) != 0, \
+                "box position has not been change or there a shift in position"
+            assert top_y[0][0] != top_y[1][0] and int(top_y[1][0]) != 0, \
+                "box position has not been change or there a shift in position"
+            assert left_y[0][0] == left_y[1][0] and int(left_y[1][0]) == 0, \
+                "box position has not been change or there a shift in position"
 
 
 

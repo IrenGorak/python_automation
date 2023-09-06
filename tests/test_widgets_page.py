@@ -72,7 +72,8 @@ class TestWidgetsPage:
             origin_button, origin_content = tab_page.check_open_tab('origin')
             use_button, use_content = tab_page.check_open_tab('use')
             assert what_button == 'What' and what_content != 0, "The tab 'what' was not present or the the is missing"
-            assert origin_button == 'Origin' and origin_content != 0, "The tab 'origin' was not present or the the is missing"
+            assert origin_button == 'Origin' and origin_content != 0, \
+                "The tab 'origin' was not present or the the is missing"
             assert use_button == 'Use' and use_content != 0, "The tab 'use' was not present or the the is missing"
 
     class TestToolTips:
@@ -90,7 +91,8 @@ class TestWidgetsPage:
             menu_page = MenuPage(driver, "https://demoqa.com/menu")
             menu_page.open()
             data = menu_page.check_menu()
-            result = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »', 'Sub Sub Item 1', 'Sub Sub Item 2', 'Main Item 3']
+            result = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »', 'Sub Sub Item 1',
+                      'Sub Sub Item 2', 'Main Item 3']
             assert data == result, "Some tabs is not open or click"
 
     class TestSelectMenu:
@@ -98,5 +100,3 @@ class TestWidgetsPage:
             select_menu = SelectMenuPage(driver, "https://demoqa.com/select-menu")
             select_menu.open()
             select_menu.check_select_menu()
-
-
