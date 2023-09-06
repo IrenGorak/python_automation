@@ -1,5 +1,3 @@
-import time
-
 from pages.alerts_windows_page import WindowsPage, AlertsPage, FramePage, NestedFramePage, ModalWindowPage
 
 

@@ -68,7 +68,7 @@ class CheckBoxPage(BasePage):
         data = []
         for item in result_list:
             data.append(item.text)
-        return  str(data).replace(' ', '').lower()
+        return str(data).replace(' ', '').lower()
 
 
 class RadioButtonPage(BasePage):
@@ -244,5 +244,4 @@ class DynamicPropertiesPage(BasePage):
         except TimeoutException:
             return False
         return True
-
 

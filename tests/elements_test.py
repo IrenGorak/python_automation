@@ -1,6 +1,5 @@
 import random
 import time
-
 from pages.elemets_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinkPage, \
     UploadDownloadPage, DynamicPropertiesPage
 
@@ -11,12 +10,12 @@ class TestElement:
             text_box_page = TextBoxPage(driver, "https://demoqa.com/text-box")
             text_box_page.open()
             text_box_page.remove_footer()
-            full_name, email, current_address, permanent_address = text_box_page.fill_all_fields()
-            output_name, output_email, output_current_address, output_permanent_address = text_box_page.check_filled_form()
+            full_name, email, current_address, permanent_addr = text_box_page.fill_all_fields()
+            output_name, output_email, output_current_address, output_permanent_addr = text_box_page.check_filled_form()
             assert full_name == output_name, "the full_name doesn't match with expected result"
             assert email == output_email, "the email doesn't match with expected result"
             assert current_address == output_current_address, "the current_address doesn't match with expected result"
-            assert permanent_address == output_permanent_address, "the permanent_address doesn't match with expected result"
+            assert permanent_addr == output_permanent_addr, "the permanent_address doesn't match with expected result"
 
             """
             OR
@@ -24,6 +23,7 @@ class TestElement:
             output_data = text_box_page.check_filled_form()
             assert input_data == output_data
             """
+
     class TestCheckbox:
         def test_check_checkbox(self, driver):
             check_box_page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
@@ -34,7 +34,7 @@ class TestElement:
             output_result = check_box_page.get_output_result()
             print(input_checkbox)
             print(output_result)
-            assert input_checkbox == output_result, "Checkboxes have not been selected"
+            assert input_checkbox == output_result, "Checkboxes have not selected"
             time.sleep(3)
 
     class TestRadioButton:
@@ -47,9 +47,9 @@ class TestElement:
             output_impressive = radio_button_page.get_output_result()
             radio_button_page.click_on_the_button('no')
             output_no = radio_button_page.get_output_result()
-            assert output_yes == "Yes", "yes have not been selected"
-            assert output_no == "No", "no have not been selected"
-            assert output_impressive == "Impressive", "impressive have not been selected"
+            assert output_yes == "Yes", "yes have not selected"
+            assert output_no == "No", "no have not selected"
+            assert output_impressive == "Impressive", "impressive have not selected"
 
     class TestWebTable:
         def test_web_table_add_person(self, driver):
@@ -57,7 +57,7 @@ class TestElement:
             web_table_page.open()
             input_new_person = web_table_page.add_new_person()
             output_table = web_table_page.check_new_added_person()
-            assert input_new_person in output_table, "the new person is not in table"
+            assert input_new_person in output_table, "the new person has not in table"
             time.sleep(4)
 
         def test_search_person_in_table(self, driver):
@@ -68,7 +68,7 @@ class TestElement:
             table_result = web_table_page.check_the_search_result()
             print(key_word)
             print(table_result)
-            assert key_word in table_result, "the resul is not finded in the table"
+            assert key_word in table_result, "the resul not find in the table"
 
         def test_web_table_update_person_info(self, driver):
             web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -77,7 +77,7 @@ class TestElement:
             web_table_page.search_person_in_table(last_name)
             age = web_table_page.update_person_info()
             row = web_table_page.check_the_search_result()
-            assert age in row, "the age is not changed"
+            assert age in row, "the age not changed"
 
         def test_web_table_delete_person(self, driver):
             web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -88,8 +88,8 @@ class TestElement:
             text = web_table_page.check_deleted_person()
             assert text == "No rows found"
 
-        # the bug was found in the page, so the test is failed.
-        # When nwe change the rows in page we doesn't see dropdown for selected view
+        # the bug found in the page, so the test failed.
+        # When nwe change the rows in pages we don't see dropdown for selected page
         def test_web_table_change_count_row(self, driver):
             web_table_page = WebTablePage(driver, "https://demoqa.com/webtables")
             web_table_page.open()
@@ -103,9 +103,9 @@ class TestElement:
             double = button_page.click_on_different_button('double')
             right = button_page.click_on_different_button('right')
             click = button_page.click_on_different_button('click')
-            assert double == 'You have done a double click', "The double button is not pressed"
-            assert right == 'You have done a right click', "The right button is not pressed"
-            assert click == 'You have done a dynamic click', "The dynamic button is not pressed"
+            assert double == 'You have done a double click', "The double button not pressed"
+            assert right == 'You have done a right click', "The right button not pressed"
+            assert click == 'You have done a dynamic click', "The dynamic button not pressed"
 
     class TestLinkPage:
         def test_the_correct_link(self, driver):
@@ -131,25 +131,23 @@ class TestElement:
             download_file = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
             download_file.open()
             check = download_file.download_file()
-            assert check is True, "The file has not been downloaded"
+            assert check is True, "The file has not downloaded"
 
     class TestDynamicProperties:
         def test_change_color_button(self, driver):
             dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
             dynamic_properties.open()
             color_before, color_after = dynamic_properties.check_change_color()
-            assert color_before != color_after, "The color is not changed"
+            assert color_before != color_after, "The color not changed"
 
         def test_visible_after_button(self, driver):
             dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
             dynamic_properties.open()
             appear = dynamic_properties.check_appear_button()
-            assert appear is True, "The buuton is not visible after 5 second"
+            assert appear is True, "The button not visible after 5 second"
 
         def test_check_enable_button(self, driver):
             dynamic_properties = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
             dynamic_properties.open()
             enable = dynamic_properties.check_enable_button()
-            assert enable is True, "The button is not clickable after 5 second"
-
-
+            assert enable is True, "The button not clickable after 5 second"
